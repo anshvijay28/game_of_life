@@ -1,22 +1,42 @@
 import './Grid.css';
+import { useState } from 'react';
 
-function generateGrid(numSquares, color) {
-    let gridItems = Array.from({ length: numSquares },  (_, index) => (
-        <div key={index} className={`border box-border ${color} hover:bg-slate-50 h-5 w-5 custom-border`}></div>
-    ));    
+export default function Grid({ rows, cols }) {
+    let initGrid = Array.from({ length: rows },  (_, rIndex) => (
+        Array.from({ length: cols}, (_, cIndex) => (0))));
+
+    const [grid, setGrid] = useState(initGrid);
+    
+    function handleClick(rIndex, cIndex) {
+        grid[rIndex][cIndex] === 0 ? 
+            grid[rIndex][cIndex] = 1 : grid[rIndex][cIndex] = 0;
+        setGrid([...grid]);
+    }
+    function renderGrid() {
+        return Array.from({ length: rows },  (_, rIndex) => (
+            Array.from({ length: cols}, (_, cIndex) => (
+                <div   
+                    key={[rIndex, cIndex]} 
+                    onClick={() => handleClick(rIndex, cIndex)}
+                    className={
+                        `border box-border 
+                        ${grid[rIndex][cIndex] === 0 ? "bg-zinc-500" : "bg-emerald-500"}
+                        hover:bg-red-400 
+                        h-5 w-5 
+                        custom-border
+                        cursor-pointer`}>
+                </div>
+            ))
+        ));    
+    }
+
     return (
-        <div className={`flex flex-row flex-wrap custom-dim items-center justify-center`}>
-            {gridItems}
+        <div className={
+            `flex flex-row flex-wrap 
+            custom-dim 
+            items-center 
+            justify-center`}>
+            {renderGrid()}
         </div>
     )
 }
-
-function Grid() {
-    //1224 h-7 w-7
-    //1711 h-6 w-7
-    //2485 h-5 w-5
-    //2015 h-5 w-5 gap-0.5
-    return generateGrid(2485, "bg-slate-700");
-}
-    
-export default Grid;
