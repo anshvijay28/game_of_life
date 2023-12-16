@@ -1,11 +1,41 @@
 import './Grid.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function Grid({ rows, cols }) {
-    let initGrid = Array.from({ length: rows },  (_, rIndex) => (
-        Array.from({ length: cols}, (_, cIndex) => (0))));
-
+export default function Grid({ rows, cols, start, clear, pause, setStart, setClear, setPause }) {
+    let initGrid = Array.from({ length: rows },  () => (
+        Array.from({ length: cols}, () => (0))));
+    
     const [grid, setGrid] = useState(initGrid);
+
+    useEffect(() => {
+        if (clear) {
+            setGrid(initGrid);
+            setStart(false);
+            setPause(false);
+            setClear(false);
+        }
+    }, [clear, setClear, setStart, setPause, initGrid]);
+
+    useEffect(() => {
+        let intervalId;
+        function lifeIteration(start, pause, setStart, setPause) {
+            if (start) {
+                
+                // lifeLoop logic  
+
+                if (pause) {
+                    setStart(false);
+                    setPause(false);
+                    clearInterval(intervalId);
+                }
+            }
+        } 
+        intervalId = setInterval(() => lifeIteration(start, pause, setStart, setPause), 1000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [start, setStart, pause, setPause]);
     
     function handleClick(rIndex, cIndex) {
         grid[rIndex][cIndex] === 0 ? 
