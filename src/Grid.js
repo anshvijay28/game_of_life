@@ -74,7 +74,7 @@ export default function Grid({ rows, cols, start, clear, pause, setStart, setCle
                 }
             }
         } 
-        intervalId = setInterval(() => lifeIteration(start, pause, setStart, setPause), 250);
+        intervalId = setInterval(() => lifeIteration(start, pause, setStart, setPause), 150);
 
         return () => {
             clearInterval(intervalId);
