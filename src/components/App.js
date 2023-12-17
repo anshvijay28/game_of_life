@@ -16,7 +16,8 @@ function App() {
 				<a
 					href="https://pi.math.cornell.edu/~lipa/mec/lesson6.html#:~:text=The%20Game%20of%20Life%20(an,of%20that%20cell's%208%20neighbors."
 					className="mb-2 text-4xl font-extrabold leading-none tracking-tight
-        text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+        					text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+					target="_blank" rel="noreferrer"
 				>
 					Game of Life
 				</a>
