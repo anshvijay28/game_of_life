@@ -1,4 +1,4 @@
-import './Grid.css';
+import '../styles/Grid.css';
 import { useState, useEffect } from 'react';
 
 function checkAliveNeighbors(r, c, arr) {
@@ -26,7 +26,7 @@ function createGrid(rows, cols) {
         Array.from({ length: cols}, () => (0))));
 }
 
-export default function Grid({ rows, cols, start, clear, pause, setStart, setClear, setPause }) {
+export default function Grid({ rows, cols, start, clear, pause, setStart, setClear, setPause, speed }) {
     let initGrid = createGrid(rows, cols);
     
     const [grid, setGrid] = useState(initGrid);
@@ -74,13 +74,13 @@ export default function Grid({ rows, cols, start, clear, pause, setStart, setCle
                 }
             }
         } 
-        intervalId = setInterval(() => lifeIteration(start, pause, setStart, setPause), 150);
+        intervalId = setInterval(() => lifeIteration(start, pause, setStart, setPause), 1000 - Math.min(1000, speed) + 1);
 
         return () => {
             clearInterval(intervalId);
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [start, pause, grid]);
+    }, [start, pause, grid, speed]);
     
     function handleClick(rIndex, cIndex) {
         grid[rIndex][cIndex] === 0 ? 
